@@ -16,23 +16,25 @@ function createCard(item, deleteElement) {
     card.querySelector(".card__image").alt = item.name;
     card.querySelector(".card__title").textContent = item.name;
 
-    deleteButton.addEventListener("click", function() {
-        deleteElement(card);
-    })
+    deleteButton.addEventListener("click", () => {
+        deleteElement(deleteButton);
+    });
+
     return card;
 }
 
 // @todo: Функция удаления карточки
 
-function deleteElement(card) {
-    card.remove()
+
+function deleteElement(deleteButton) {
+    deleteButton.parentElement.remove();
 }
 
 // @todo: Вывести карточки на страницу
 
 function displayCards(arrayOfCards) {
     arrayOfCards.forEach(function displayCards(item) {
-        const card = createCard(item);
+        const card = createCard(item,deleteElement);
         placesList.appendChild(card);
     });
 }
