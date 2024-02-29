@@ -4,7 +4,7 @@
   "description": "https://github.com/LilyHort/mesto-project-ff.git",
   "main": "index.js",
   "scripts": {
-    "start": "gulp",
+    "start": "webpack",
     "build": "webpack --mode production",
     "dev": "webpack serve"
   },
@@ -35,9 +35,6 @@
   },
   "dependencies": {
     "core-js": "^3.35.1",
-    "fontforge": "^0.0.4",
-    "graphicsmagick": "^0.0.1",
-    "gulp": "^3.9.1",
-    "gulp-cli": "^2.3.0"
+    "gulp": "^4.0.2"
   }
 }
