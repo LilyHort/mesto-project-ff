@@ -1,19 +1,18 @@
 // Закрытие попап
-function onKeyDown(evt) {
-  if (evt.key === "Escape") {
+function onKeyDown(event) {
+  if (event.key === "Escape") {
     closePopup();
   }
 }
 
-function closePopupOnOverlayClick(evt) {
-  const openedPopup = document.querySelector('.popup_is-opened');
-  if (evt.target === openedPopup) {
+function closePopupOnOverlayClick(event) {
+  if (event.target === event.currentTarget) {
     closePopup();
   }
 }
 
-function closeByClick(evt) {
-  if (evt.target.classList.contains('popup__close')) {
+function closeByClick(event) {
+  if (event.target.classList.contains('popup__close')) {
     closePopup();
   }
 }

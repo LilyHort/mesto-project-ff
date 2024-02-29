@@ -1,11 +1,11 @@
 // @todo: Темплейт карточки
 
-const cardTemplate = document.querySelector("#card-template").content;
+const cardTemplate = document.querySelector("#card-template").content.querySelector('.card');
 
 // @todo: Функция создания карточки
 
 function createCard(item, deleteElement, openImage, addLikeButtonActiveClass) {
-    const card = cardTemplate.querySelector('.card').cloneNode(true);
+    const card = cardTemplate.cloneNode(true);
     const deleteButton = card.querySelector(".card__delete-button");
     const cardImage = card.querySelector(".card__image");
     const cardTitle = card.querySelector(".card__title");
@@ -19,17 +19,16 @@ function createCard(item, deleteElement, openImage, addLikeButtonActiveClass) {
 
     likeButton.addEventListener("click", addLikeButtonActiveClass);
 
-    deleteButton.addEventListener("click", () => {
-        deleteElement(deleteButton);
-    });
+    deleteButton.addEventListener("click", deleteElement);
 
     return card;
 }
 
 // @todo: Функция удаления карточки
 
-function deleteElement(deleteButton) {
-    deleteButton.parentElement.remove();
+function deleteElement(event) {
+ const card = event.target.closest(".places__item");
+ card.remove()
 }
 
 // Добавление лайка
