@@ -105,3 +105,62 @@ newPlace.addEventListener("submit", (event) => {
     document.forms["new-place"].reset();
 })
 
+
+// Валидация формы
+
+
+//const formError = formElement.querySelector(".popup__input-error"); 
+
+//const popupInput = formElement.querySelector(".popup__input")
+//const popupError = formElement.querySelector(`.${popupInput.id}-error`);
+
+// Функция добавляющаяя класс ошибки 
+
+const showInputError = (form, inputElement, errorMessage) => {
+    const errorElement = form.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add("popup__input-type-error");
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add("popup__input-error_active");
+  };
+
+  // Функция удаляет класс с ошибкой
+const hideInputError = (form, inputElement) => {
+    const errorElement = form.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove("popup__input-type-error");
+    errorElement.classList.remove('popup__input-error_active');
+    errorElement.textContent ="";
+  };
+
+
+  // Функция проверяющая валидность формы 
+
+  function isValid (form, inputElement) {
+      if(!inputElement.validity.valid) {
+        showInputError(form, inputElement, inputElement.validationMessage)
+      }
+      else {
+        hideInputError(form, inputElement)
+      }
+  }
+
+  function setEventListeners(form) {
+    const inputList = Array.from(form.querySelectorAll(".popup__input"));
+
+    inputList.forEach((inputElement) => {
+        inputElement.addEventListener("input",() => isValid(form, inputElement))
+    })
+  }
+
+  
+  function enableValidation () {
+      const formList = Array.from(document.querySelectorAll(".popup__form"));
+
+      formList.forEach((formElement) => {
+         formElement.addEventListener("submit", (event) => {
+            event.preventDefault()
+         })
+         setEventListeners(formElement)
+      })
+  };
+  
+  enableValidation();
