@@ -114,27 +114,54 @@ newPlace.addEventListener("submit", (event) => {
 //const popupInput = formElement.querySelector(".popup__input")
 //const popupError = formElement.querySelector(`.${popupInput.id}-error`);
 
+// Шаблон регулярного выражения
+// const castomTextError = "Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+// const regex = /^[a-zа-яё\-\s]+$/i;
+/*
+function validateInput(form, inputElement) {
+  
+    const regex = /[a-z-а-я-ё-]+/gi;
+    if(regex.test(inputElement.value)){
+        return true;
+    }
+    else {
+        const errorElement = form.querySelector(`.${inputElement.id}-error`);
+        errorElement.textContent = "Поле может содержать только буквы, пробелы и дефисы.";
+        return false;
+    }
+}
+*/
 // Функция добавляющаяя класс ошибки 
 
-const showInputError = (form, inputElement, errorMessage) => {
+function showInputError(form, inputElement, errorMessage) {
     const errorElement = form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add("popup__input-type-error");
     errorElement.textContent = errorMessage;
     errorElement.classList.add("popup__input-error_active");
-  };
+  }; 
 
   // Функция удаляет класс с ошибкой
-const hideInputError = (form, inputElement) => {
+
+function hideInputError(form, inputElement) {
     const errorElement = form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove("popup__input-type-error");
     errorElement.classList.remove('popup__input-error_active');
     errorElement.textContent ="";
   };
 
+  
+
+  //const input = document.querySelector("input[type=‘text’]");
+
 
   // Функция проверяющая валидность формы 
 
   function isValid (form, inputElement) {
+    if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  } else {
+    inputElement.setCustomValidity("");
+  }
       if(!inputElement.validity.valid) {
         showInputError(form, inputElement, inputElement.validationMessage)
       }
@@ -143,12 +170,22 @@ const hideInputError = (form, inputElement) => {
       }
   }
 
+
+
+ 
+
   function setEventListeners(form) {
     const inputList = Array.from(form.querySelectorAll(".popup__input"));
+    const buttonElement = form.querySelector(".popup__button");
+
+    toggleButtonState(inputList, buttonElement)
 
     inputList.forEach((inputElement) => {
-        inputElement.addEventListener("input",() => isValid(form, inputElement))
+        inputElement.addEventListener("input", function() { 
+            isValid(form, inputElement)
+        toggleButtonState(inputList, buttonElement)
     })
+})
   }
 
   
@@ -159,8 +196,30 @@ const hideInputError = (form, inputElement) => {
          formElement.addEventListener("submit", (event) => {
             event.preventDefault()
          })
+
          setEventListeners(formElement)
       })
   };
+
+  // Функция принимает массив полей
+
+  function hasInvalidInput(inputList) {
+    return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+  }
+
+   // Функция блокирующая кнопку 
+
+   function toggleButtonState(inputList, buttonElement) {
+    if (hasInvalidInput(inputList)) {
+        buttonElement.disabled = true;
+        buttonElement.classList.add("popup__button-inactive")
+    }
+    else {
+        buttonElement.disabled = false;
+      buttonElement.classList.remove("popup__button-inactive")
+    }
+}
   
   enableValidation();
