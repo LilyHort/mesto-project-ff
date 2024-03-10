@@ -1,4 +1,3 @@
-import  {clearError, toggleButtonState} from "../index.js"
 // Закрытие попап
 function onKeyDown(event) {
   if (event.key === "Escape") {
@@ -24,7 +23,6 @@ function closePopup() {
   document.removeEventListener('keydown', onKeyDown);
   openedPopup.removeEventListener('mousedown', closePopupOnOverlayClick);
   openedPopup.removeEventListener('click', closeByClick);
-  clearError();
 }
 
 //Открытие попап
