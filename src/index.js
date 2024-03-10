@@ -30,12 +30,12 @@ popups.forEach(popup => popup.classList.add("popup_is-animated"));
 // Добавление фотографии
 
 buttonAdd.addEventListener("click", () => {
+    document.forms["new-place"].reset();
     openPopup(popupNewCard)
+    
 });
 
 //Профиль
-
-
 
 buttonEdite.addEventListener("click", () => {
     function openEdite() {
@@ -43,14 +43,13 @@ buttonEdite.addEventListener("click", () => {
         descriptionInput.value = profileDescription.textContent;
     }
 
-    openEdite()
-    openPopup(popupEdit)
+    openEdite();
+    openPopup(popupEdit);
 });
 
 //Темплейт
 
 // @todo: DOM узлы
-
 
 function openImage(event) {
     const card = event.target.closest('.places__item');
@@ -80,13 +79,12 @@ function editFormSubmit(event) {
     event.preventDefault();
     profileName.textContent = nameInputForm.value;
     profileDescription.textContent = jobInput.value;
-    closePopup()
+    closePopup();
 }
 
 formElement.addEventListener('submit', editFormSubmit)
 
 // Форма загрузки фотографии
-
 
 function addCardFormSubmit(event) {
     event.preventDefault();
@@ -101,36 +99,19 @@ function addCardFormSubmit(event) {
 }
 
 newPlace.addEventListener("submit", (event) => {
+    event.preventDefault();
     addCardFormSubmit(event)
     document.forms["new-place"].reset();
+
+    // Очистка формы после отправки 
+    const inputList = Array.from(newPlace.querySelectorAll(".popup__input"));
+    const buttonElement = newPlace.querySelector(".popup__button");
+    toggleButtonState(inputList, buttonElement);
 })
 
 
 // Валидация формы
 
-
-//const formError = formElement.querySelector(".popup__input-error"); 
-
-//const popupInput = formElement.querySelector(".popup__input")
-//const popupError = formElement.querySelector(`.${popupInput.id}-error`);
-
-// Шаблон регулярного выражения
-// const castomTextError = "Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
-// const regex = /^[a-zа-яё\-\s]+$/i;
-/*
-function validateInput(form, inputElement) {
-  
-    const regex = /[a-z-а-я-ё-]+/gi;
-    if(regex.test(inputElement.value)){
-        return true;
-    }
-    else {
-        const errorElement = form.querySelector(`.${inputElement.id}-error`);
-        errorElement.textContent = "Поле может содержать только буквы, пробелы и дефисы.";
-        return false;
-    }
-}
-*/
 // Функция добавляющаяя класс ошибки 
 
 function showInputError(form, inputElement, errorMessage) {
@@ -149,11 +130,6 @@ function hideInputError(form, inputElement) {
     errorElement.textContent ="";
   };
 
-  
-
-  //const input = document.querySelector("input[type=‘text’]");
-
-
   // Функция проверяющая валидность формы 
 
   function isValid (form, inputElement) {
@@ -170,25 +146,20 @@ function hideInputError(form, inputElement) {
       }
   }
 
-
-
- 
-
   function setEventListeners(form) {
     const inputList = Array.from(form.querySelectorAll(".popup__input"));
     const buttonElement = form.querySelector(".popup__button");
 
-    toggleButtonState(inputList, buttonElement)
+    toggleButtonState(inputList, buttonElement);
 
     inputList.forEach((inputElement) => {
         inputElement.addEventListener("input", function() { 
-            isValid(form, inputElement)
-        toggleButtonState(inputList, buttonElement)
+            isValid(form, inputElement);
+        toggleButtonState(inputList, buttonElement);
     })
 })
   }
 
-  
   function enableValidation () {
       const formList = Array.from(document.querySelectorAll(".popup__form"));
 
@@ -222,4 +193,20 @@ function hideInputError(form, inputElement) {
     }
 }
   
+// Функция очистки валидации 
+
+ function clearError() {
+   const popupInputErrors = document.querySelectorAll(".popup__input-error");
+   const popupInputs = document.querySelectorAll(".popup__input");
+
+    popupInputErrors.forEach((popupInputError) => {
+        popupInputError.textContent = "";
+        })
+    popupInputs.forEach((popupInput) => {
+        popupInput.classList.remove("popup__input-type-error")
+    })   
+  }
+
   enableValidation();
+
+  export {clearError}
