@@ -3,6 +3,7 @@ import { initialCards } from "./components/cards.js";
 import { openPopup, closePopup } from "./components/modal.js";
 import { createCard, deleteElement, addLikeButtonActiveClass } from "./components/card.js";
 import { enableValidation, clearValidation } from './components/validation.js';
+import { getUserInfo, updateUserInfo, getInitialCards, addNewCard } from './components/API.js';
 
 const popups = document.querySelectorAll(".popup");
 const buttonEdite = document.querySelector(".profile__edit-button");
@@ -81,7 +82,23 @@ function displayCards(arrayOfCards) {
     });
 }
 
-displayCards(initialCards);
+// displayCards(initialCards);
+
+function loadInitialInfo() {
+    Promise.all([getInitialCards()])
+      .then((data) => {
+        displayCards(data[0])
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+let a = await getInitialCards();
+displayCards(a);
+console.log(a);
+// loadInitialInfo();
+
 
 // Форма профиля 
 function editFormSubmit(event) {
@@ -114,4 +131,3 @@ newPlace.addEventListener("submit", (event) => {
 })
 
 enableValidation(validationConfig);
-
