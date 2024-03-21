@@ -1,4 +1,5 @@
 // Закрытие попап
+
 function onKeyDown(event) {
   if (event.key === "Escape") {
     closePopup();
@@ -26,6 +27,7 @@ function closePopup() {
 }
 
 //Открытие попап
+
 function openPopup(popup) {
   popup.classList.add('popup_is-opened');
   document.addEventListener('keydown', onKeyDown);

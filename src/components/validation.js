@@ -1,5 +1,5 @@
-
 // Функция добавляющаяя класс ошибки 
+
 function showInputError(form, inputElement, errorMessage, inputErrorClass, errorClass) {
     const errorElement = form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(inputErrorClass);
@@ -8,6 +8,7 @@ function showInputError(form, inputElement, errorMessage, inputErrorClass, error
 };
 
 // Функция удаляет класс с ошибкой
+
 function hideInputError(form, inputElement, inputErrorClass, errorClass) {
     const errorElement = form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(inputErrorClass);
@@ -16,6 +17,7 @@ function hideInputError(form, inputElement, inputErrorClass, errorClass) {
 };
 
 // Функция проверяющая валидность формы 
+
 function isValid(form, inputElement, inputErrorClass, errorClass) {
     if (inputElement.validity.patternMismatch) {
         inputElement.setCustomValidity(inputElement.dataset.errorMessage);
@@ -66,22 +68,12 @@ function setEventListeners(form, validationConfig) {
 
 // Функция включения валидации
 function enableValidation(validationConfig) {
-    // validationConfig obj
-    // {
-    //     formSelector: '.popup__form',
-    //     inputSelector: '.popup__input',
-    //     submitButtonSelector: '.popup__button',
-    //     inactiveButtonClass: '.popup__button-inactive',
-    //     inputErrorClass: 'popup__input-type-error',
-    //     errorClass: 'popup__input-error_active'
-    // }
     const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 
     formList.forEach((formElement) => {
         formElement.addEventListener("submit", (event) => {
             event.preventDefault()
         })
-
         setEventListeners(formElement, validationConfig)
     })
 };
@@ -101,4 +93,4 @@ function clearValidation(form, validationConfig) {
     toggleButtonState(popupInputs, buttonElement, validationConfig.inactiveButtonClass)
 }
 
-export {enableValidation, clearValidation}
+export { enableValidation, clearValidation }
