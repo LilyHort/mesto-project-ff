@@ -81,7 +81,6 @@ function addNewCard(cardName, cardLink) {
 // Удаление каточки с сервера
 
 function deleteCard(cardId) {
-  console.log(`API Delete card: ${cardId}`)
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers

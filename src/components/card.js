@@ -37,7 +37,6 @@ function createCard(item, deleteElement, openImage, addLikeButtonActiveClass) {
         deleteButton.remove();
     }
     else {
-        console.log(`Add card: ${item._id} Owner: ${item.owner._id} User: ${sessionStorage.userId}`)
         deleteButton.addEventListener("click", () => deleteElement(item._id));
     }
     return card;
