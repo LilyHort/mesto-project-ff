@@ -21,13 +21,13 @@ const formEditProfile = document.forms["edit-profile"];
 const nameInputForm = formEditProfile.elements.name;
 const jobInput = formEditProfile.elements.description;
 const buttonAdd = document.querySelector(".profile__add-button");
-const newPlace = document.forms["new-place"];
+const newPlaceForm = document.forms["new-place"];
 const newPlaceNameForm = document.querySelector(".popup__input_type_card-name");
 const newPlaceLink = document.querySelector(".popup__input_type_url");
 const popupNewCard = document.querySelector(".popup_type_new-card");
 const profileImage = document.querySelector(".profile__image");
-const newAvatar = document.forms["new-avatar"];
-const linkInputFormAvatar = newAvatar.elements.link;
+const newAvatarForm = document.forms["new-avatar"];
+const linkInputFormAvatar = newAvatarForm.elements.link;
 const popupAvatar = document.querySelector(".popup_type_avatar");
 const popupDeleteButton = document.querySelector(".popup__button-delete");
 const popupDelete = document.querySelector(".popup_type_delete-card");
@@ -46,8 +46,8 @@ popups.forEach(popup => popup.classList.add("popup_is-animated"));
 // Кнопка открытия попапа добавления фотографии
 
 buttonAdd.addEventListener("click", () => {
-    newPlace.reset();
-    clearValidation(newAvatar, validationConfig);
+    newPlaceForm.reset();
+    clearValidation(newAvatarForm, validationConfig);
     openPopup(popupNewCard);
 });
 
@@ -63,8 +63,8 @@ buttonEdite.addEventListener("click", () => {
 // Редактирование аватара 
 
 profileImage.addEventListener("click", () => {
-    newAvatar.reset();
-    clearValidation(newAvatar, validationConfig);
+    newAvatarForm.reset();
+    clearValidation(newAvatarForm, validationConfig);
     openPopup(popupAvatar);
 })
 
@@ -83,7 +83,7 @@ function editFormSubmitAvatar(event) {
         });
 }
 
-newAvatar.addEventListener('submit', editFormSubmitAvatar)
+newAvatarForm.addEventListener('submit', editFormSubmitAvatar)
 
 // Открытие картинки по клику
 
@@ -126,6 +126,7 @@ function loadInitialInfo() {
 
 // Сохранение изминения профиля
 
+
 function editFormSubmit(event) {
     event.preventDefault();
     const button = event.target.querySelector(".popup__button");
@@ -134,6 +135,7 @@ function editFormSubmit(event) {
         .then((res) => {
             profileName.textContent = res.name;
             profileDescription.textContent = res.about;
+            button.textContent = "Сохранить";
             closePopup();
         })
         .catch((err) => console.log(err))
@@ -181,11 +183,11 @@ function addCardFormSubmit(event) {
         });
 }
 
-newPlace.addEventListener("submit", (event) => {
+newPlaceForm.addEventListener("submit", (event) => {
     event.preventDefault();
     addCardFormSubmit(event)
     document.forms["new-place"].reset();
-    clearValidation(newPlace, validationConfig);
+    clearValidation(newPlaceForm, validationConfig);
 })
 
 enableValidation(validationConfig);

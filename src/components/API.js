@@ -1,3 +1,5 @@
+import {checkResponse} from "../utils/utils.js";
+
 const config = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/wff-cohort-8',
   headers: {
@@ -12,13 +14,7 @@ function getUserInfo() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(checkResponse)
 }
 
 // Обнавляет информацию о пользователе
@@ -33,13 +29,7 @@ function updateUserInfo(nameUser, aboutUser) {
         about: aboutUser
       })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+  .then(checkResponse)
 }
 
 // Возвращает все карточки
@@ -48,13 +38,7 @@ function getInitialCards() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+  .then(checkResponse)
 };
 
 // Добавляет новую карточку
@@ -69,13 +53,7 @@ function addNewCard(cardName, cardLink) {
         link: cardLink
       })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+  .then(checkResponse)
 }
 
 // Удаление каточки с сервера
@@ -85,13 +63,7 @@ function deleteCard(cardId) {
     method: "DELETE",
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+  .then(checkResponse)
 }
 
 
@@ -107,13 +79,7 @@ function updateAvatar(url) {
 
       })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+  .then(checkResponse)
 }
 
 // Добавление лайка 
@@ -123,12 +89,7 @@ function addLike(cardId) {
     method: "PUT",
     headers: config.headers
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((err) => console.log(err))
+  .then(checkResponse)
 }
 
 // Удаление лайка
@@ -138,12 +99,7 @@ function deleteLike(cardId) {
     method: "DELETE",
     headers: config.headers
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((err) => console.log(err))
+  .then(checkResponse)
 }
 
 export { getUserInfo, updateUserInfo, getInitialCards, addNewCard, deleteCard, addLike, deleteLike, updateAvatar }
