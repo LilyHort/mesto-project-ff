@@ -52,7 +52,6 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
 }
 
 function setEventListeners(form, validationConfig) {
-
     const inputList = Array.from(form.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = form.querySelector(validationConfig.submitButtonSelector);
 
@@ -79,6 +78,7 @@ function enableValidation(validationConfig) {
 };
 
 // Функция очистки валидации 
+
 function clearValidation(form, validationConfig, inputErrorClass, errorClass) {
     const popupInputs = Array.from(form.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = form.querySelector(validationConfig.submitButtonSelector);

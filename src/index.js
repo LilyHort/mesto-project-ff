@@ -16,18 +16,20 @@ const placesList = container.querySelector('.places__list');
 const popupContentImage = document.querySelector(".popup_type_image");
 const popupImage = document.querySelector(".popup__image");
 const popupCaption = document.querySelector(".popup__caption");
-const formElement = document.querySelector(".popup__form")
 const formEditProfile = document.forms["edit-profile"];
 const nameInputForm = formEditProfile.elements.name;
 const jobInput = formEditProfile.elements.description;
+const submitProfileButton= formEditProfile.querySelector(".popup__button");
 const buttonAdd = document.querySelector(".profile__add-button");
 const newPlaceForm = document.forms["new-place"];
 const newPlaceNameForm = document.querySelector(".popup__input_type_card-name");
 const newPlaceLink = document.querySelector(".popup__input_type_url");
+const submitNewPlaceFormButton = newPlaceForm.querySelector(".popup__button");
 const popupNewCard = document.querySelector(".popup_type_new-card");
 const profileImage = document.querySelector(".profile__image");
 const newAvatarForm = document.forms["new-avatar"];
 const linkInputFormAvatar = newAvatarForm.elements.link;
+const submitAvatarButton = newAvatarForm.querySelector(".popup__button");
 const popupAvatar = document.querySelector(".popup_type_avatar");
 const popupDeleteButton = document.querySelector(".popup__button-delete");
 const popupDelete = document.querySelector(".popup_type_delete-card");
@@ -70,8 +72,7 @@ profileImage.addEventListener("click", () => {
 
 function editFormSubmitAvatar(event) {
     event.preventDefault();
-    const button = event.target.querySelector(".popup__button");
-    button.textContent = "Сохранение...";
+    submitAvatarButton.textContent = "Сохранение...";
     updateAvatar(linkInputFormAvatar.value)
         .then((res) => {
             profileImage.style.backgroundImage = `url('${res.avatar}')`;
@@ -79,7 +80,7 @@ function editFormSubmitAvatar(event) {
         })
         .catch((err) => console.log(err))
         .finally(() => {
-            button.textContent = "Сохранить";
+            submitAvatarButton.textContent = "Сохранить";
         });
 }
 
@@ -126,25 +127,23 @@ function loadInitialInfo() {
 
 // Сохранение изминения профиля
 
-
 function editFormSubmit(event) {
     event.preventDefault();
-    const button = event.target.querySelector(".popup__button");
-    button.textContent = "Сохранение...";
+    submitProfileButton.textContent = "Сохранение...";
     updateUserInfo(nameInputForm.value, jobInput.value)
         .then((res) => {
             profileName.textContent = res.name;
             profileDescription.textContent = res.about;
-            button.textContent = "Сохранить";
+            submitProfileButton.textContent = "Сохранить";
             closePopup();
         })
         .catch((err) => console.log(err))
         .finally(() => {
-            button.textContent = "Сохранить";
+            submitProfileButton.textContent = "Сохранить";
         });
 }
 
-formElement.addEventListener('submit', editFormSubmit)
+formEditProfile.addEventListener('submit', editFormSubmit)
 
 // Подтверждение удаления карточки
 
@@ -169,8 +168,7 @@ popupDeleteButton.addEventListener("click", buttonAproveDeleteCardListener)
 
 function addCardFormSubmit(event) {
     event.preventDefault();
-    const button = event.target.querySelector(".popup__button");
-    button.textContent = "Сохранение...";
+    submitNewPlaceFormButton.textContent = "Сохранение...";
     addNewCard(newPlaceNameForm.value, newPlaceLink.value)
         .then((res) => {
             const createElement = createCard(res, deleteElement, openImage, addLikeButtonActiveClass);
@@ -179,16 +177,11 @@ function addCardFormSubmit(event) {
         })
         .catch((err) => console.log(err))
         .finally(() => {
-            button.textContent = "Сохранить";
+            submitNewPlaceFormButton.textContent = "Сохранить";
         });
 }
 
-newPlaceForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    addCardFormSubmit(event)
-    document.forms["new-place"].reset();
-    clearValidation(newPlaceForm, validationConfig);
-})
+newPlaceForm.addEventListener("submit", addCardFormSubmit);
 
 enableValidation(validationConfig);
 

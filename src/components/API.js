@@ -66,7 +66,6 @@ function deleteCard(cardId) {
   .then(checkResponse)
 }
 
-
 // Обновление аватара пользователя
 
 function updateAvatar(url) {
