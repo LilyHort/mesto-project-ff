@@ -56,7 +56,7 @@ function setEventListeners(form, validationConfig) {
     const inputList = Array.from(form.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = form.querySelector(validationConfig.submitButtonSelector);
 
-    toggleButtonState(inputList, buttonElement, validationConfig.submitButtonSelector);
+    toggleButtonState(inputList, buttonElement, validationConfig.inactiveButtonClass);
 
     inputList.forEach((inputElement) => {
         inputElement.addEventListener("input", function () {
@@ -79,17 +79,13 @@ function enableValidation(validationConfig) {
 };
 
 // Функция очистки валидации 
-function clearValidation(form, validationConfig) {
-    const popupInputErrors = form.querySelectorAll(`${validationConfig.inputSelector}-error`);
+function clearValidation(form, validationConfig, inputErrorClass, errorClass) {
     const popupInputs = Array.from(form.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = form.querySelector(validationConfig.submitButtonSelector);
 
-    popupInputErrors.forEach((popupInputError) => {
-        popupInputError.textContent = "";
-    })
-    popupInputs.forEach((popupInput) => {
-        popupInput.classList.remove(validationConfig.inputErrorClass)
-    })
+    popupInputs.forEach((inputElement) => {
+        hideInputError(form, inputElement, validationConfig.inputErrorClass, validationConfig.errorClass)
+    }) 
     toggleButtonState(popupInputs, buttonElement, validationConfig.inactiveButtonClass)
 }
 

@@ -47,7 +47,7 @@ popups.forEach(popup => popup.classList.add("popup_is-animated"));
 
 buttonAdd.addEventListener("click", () => {
     newPlaceForm.reset();
-    clearValidation(newAvatarForm, validationConfig);
+    clearValidation(newPlaceForm, validationConfig);
     openPopup(popupNewCard);
 });
 
